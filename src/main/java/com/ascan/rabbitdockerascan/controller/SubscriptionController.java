@@ -21,6 +21,6 @@ public class SubscriptionController {
     @PutMapping
     private ResponseEntity alteraSubscription(@RequestBody SubscriptionsDto subscriptionsDto){
         this.rabbitmqService.enviaMensagem(RabbitMQconstants.fila_subscription, subscriptionsDto);
-        return new ResponseEntity(HttpStatus.OK); //Apenas retornando OK se der certo o nosso método
+        return new ResponseEntity(HttpStatus.OK); //Apenas retornando OK se der certo o método
     }
 }
