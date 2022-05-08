@@ -11,5 +11,7 @@
 - Utilização da linguagem Java com Springboot para backend
 - RabbitMQ com Docker como mensageria para empilhamento das notificações
 - MySQL como banco de dados
+- Diagrama de sequência:
+-    
 
 ## Rodando o projeto localmente:
