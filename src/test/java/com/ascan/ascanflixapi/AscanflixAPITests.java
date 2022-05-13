@@ -1,13 +1,18 @@
-package com.ascan.rabbitdockerascan;
+package com.ascan.ascanflixapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RabbitDockerAscanApplicationTests {
+class AscanflixAPITests {
 
 	@Test
 	void contextLoads() {
+		// cenário
+
+		// execução
+
+		// verificação
 	}
 
 }

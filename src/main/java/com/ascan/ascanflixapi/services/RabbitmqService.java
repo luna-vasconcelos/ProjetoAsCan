@@ -1,4 +1,4 @@
-package com.ascan.rabbitdockerascan.services;
+package com.ascan.ascanflixapi.services;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,15 +1,11 @@
-package com.ascan.rabbitdockerascan.model;
+package com.ascan.ascanflixapi.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)

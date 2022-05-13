@@ -1,6 +1,6 @@
-package com.ascan.rabbitdockerascan.connections;
+package com.ascan.ascanflixapi.connections;
 
-import com.ascan.rabbitdockerascan.constants.RabbitMQconstants;
+import com.ascan.ascanflixapi.constants.RabbitMQconstants;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.DirectExchange;
