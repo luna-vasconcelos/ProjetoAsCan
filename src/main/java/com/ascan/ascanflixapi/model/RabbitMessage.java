@@ -1,4 +1,4 @@
-package com.ascan.rabbitdockerascan.model;
+package com.ascan.ascanflixapi.model;
 
 //import javax.persistence.Entity;
 //

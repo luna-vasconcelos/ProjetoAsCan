@@ -1,7 +1,7 @@
-package com.ascan.rabbitdockerascan.controller;
+package com.ascan.ascanflixapi.controller;
 
-import com.ascan.rabbitdockerascan.model.User;
-import com.ascan.rabbitdockerascan.repository.UserRepository;
+import com.ascan.ascanflixapi.model.User;
+import com.ascan.ascanflixapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

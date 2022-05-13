@@ -1,14 +1,9 @@
-package com.ascan.rabbitdockerascan.consumer;
+package com.ascan.ascanflixapi.consumer;
 
-import com.ascan.rabbitdockerascan.constants.RabbitMQconstants;
-import com.ascan.rabbitdockerascan.dto.NotificationDto;
-import com.ascan.rabbitdockerascan.model.EventHistory;
-import com.ascan.rabbitdockerascan.repository.EventHistoryRepository;
+import com.ascan.ascanflixapi.constants.RabbitMQconstants;
+import com.ascan.ascanflixapi.dto.NotificationDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 @Component
 public class NotificationConsumer {
@@ -20,7 +15,7 @@ public class NotificationConsumer {
 //    @Autowired
 //    private NotificationDto notification;
 
-    // TODO: validar o evento
+    // TODO: adicionar validação do evento
     @RabbitListener(queues = RabbitMQconstants.queue_notification)
     private void consumer(NotificationDto notification){
         System.out.println(notification.notification); // receber o eventhistory

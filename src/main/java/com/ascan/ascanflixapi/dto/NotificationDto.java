@@ -1,4 +1,4 @@
-package com.ascan.rabbitdockerascan.dto;
+package com.ascan.ascanflixapi.dto;
 
 import java.io.Serializable;
 

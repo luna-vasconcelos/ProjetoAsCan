@@ -1,17 +1,13 @@
-package com.ascan.rabbitdockerascan.controller;
+package com.ascan.ascanflixapi.controller;
 
-import com.ascan.rabbitdockerascan.constants.RabbitMQconstants;
-import com.ascan.rabbitdockerascan.dto.NotificationDto;
-import com.ascan.rabbitdockerascan.model.User;
-import com.ascan.rabbitdockerascan.repository.UserRepository;
-import com.ascan.rabbitdockerascan.services.RabbitmqService;
+import com.ascan.ascanflixapi.constants.RabbitMQconstants;
+import com.ascan.ascanflixapi.dto.NotificationDto;
+import com.ascan.ascanflixapi.services.RabbitmqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping (value = "notification") // mapeia a classe através de um endpoint // endpoint notification
