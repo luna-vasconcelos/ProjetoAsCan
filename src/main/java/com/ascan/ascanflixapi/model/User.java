@@ -4,11 +4,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
     private static final Integer serialVersionUID = 1;
@@ -17,6 +17,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank(message = "Full Name")
     private String full_name;
 
     @CreationTimestamp

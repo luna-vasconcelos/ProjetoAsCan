@@ -34,15 +34,4 @@ public class UserController {
     public ResponseEntity<User> save(@Valid @RequestBody User user){
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
-
-//    public void Subscription_purchased(){
-//
-//
-//        String notification = new String(); // trocar aqui pelo objeto notification que é passado no
-//        // controller, precisa ser o mesmo pra tá tudo alinhado
-//
-//        if (notification.equals("SUBSCRIPTION_PURCHASED")){
-//            // CREATE linhas em "user", "subscription", "eventhistory" e "status"
-//        }
-//    }
 }
