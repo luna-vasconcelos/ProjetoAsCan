@@ -1,5 +1,5 @@
 package com.ascan.rabbitdockerascan.constants;
 
 public class RabbitMQconstants {
-    public static final String fila_subscription = "SUBSCRIPTION";
+    public static final String queue_notification = "NOTIFICATION";
 }

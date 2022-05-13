@@ -34,7 +34,7 @@ public class RabbitMQconnection {
     //está função é executada assim que nossa classe é instanciada pelo Spring, devido a anotação @Component
     @PostConstruct
     private void adiciona(){
-        Queue filaEstoque = this.fila(RabbitMQconstants.fila_subscription);
+        Queue filaEstoque = this.fila(RabbitMQconstants.queue_notification);
 
         DirectExchange troca = this.trocaDireta();
 
@@ -48,4 +48,3 @@ public class RabbitMQconnection {
         this.amqpAdmin.declareBinding(ligacaoEstoque);
     }
 }
-
