@@ -1,4 +1,4 @@
-package com.ascan.ascanflixapi.model;
+package com.ascan.ascanflixapi.domain.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
