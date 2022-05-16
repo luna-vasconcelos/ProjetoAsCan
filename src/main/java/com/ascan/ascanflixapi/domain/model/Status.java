@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Status implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String status_name;

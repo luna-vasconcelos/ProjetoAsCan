@@ -1,31 +1,38 @@
 package com.ascan.ascanflixapi.domain.model;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Optional;
 
 @Entity
 public class Subscription implements Serializable {
+
+    private static final Integer serialVersionUID = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Status status;
 
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    private Instant created_at;
 
-    // alterar tipo e
-    private LocalDateTime updated_at;
+    @UpdateTimestamp
+    private Date updated_at;
 
     public Integer getId() {
         return id;
@@ -39,10 +46,6 @@ public class Subscription implements Serializable {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -51,19 +54,23 @@ public class Subscription implements Serializable {
         this.status = status;
     }
 
-    public LocalDateTime getCreated_at() {
+    public Instant getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
+    public void setCreated_at(Instant created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDateTime getUpdated_at() {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
+    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
 }

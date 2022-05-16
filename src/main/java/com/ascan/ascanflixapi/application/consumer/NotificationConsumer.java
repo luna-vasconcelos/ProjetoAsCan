@@ -1,8 +1,11 @@
 package com.ascan.ascanflixapi.application.consumer;
 
 import com.ascan.ascanflixapi.connections.RabbitMQconnection;
+import com.ascan.ascanflixapi.domain.model.Subscription;
+import com.ascan.ascanflixapi.domain.model.User;
 import com.ascan.ascanflixapi.dto.NotificationDto;
 import com.ascan.ascanflixapi.repository.SubscriptionRepository;
+import com.ascan.ascanflixapi.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,31 +14,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NotificationConsumer {
-//TODO: implementar get(all)
 
-//    @Autowired
-//    private EventHistoryRepository eventHistoryRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private static final Logger log = LoggerFactory.getLogger(NotificationConsumer.class);
-
-//    @RabbitListener(queues = RabbitMQconnection.QUEUE_GENERIC_NAME)
-//    public void receiveMessage(NotificationDto notification) {
-//        log.info("Received message as a generic AMQP 'Message' wrapper: {}", notification.toString());
-//    }
 
     @RabbitListener(queues = RabbitMQconnection.QUEUE_SPECIFIC_NAME)
     public void receiveMessage2(final NotificationDto notification) {
         log.info("Received message and deserialized: {}", notification.toString());
 
-//        if (Objects.equals(notification.notification, "SUBSCRIPTION_PURCHASED")){
-//
-//            SubscriptionRepository repository = new;
-//            repository.save(notification.user_id);
-//        }
+        Optional<User> user = userRepository.findById(notification.user_id);
+
+        // trocar para enum + switch-case
+        if (Objects.equals(notification.notification, "SUBSCRIPTION_PURCHASED")){
+            Subscription subscription = new Subscription();
+            subscription.setUser(user.get());
+
+            subscriptionRepository.save(subscription);
+        }
     }
 
     //
@@ -59,35 +64,4 @@ public class NotificationConsumer {
         //   - Alterar ou Status para o novo status com base em qual type é
         //   - Salvar essa alteração
         //   - Mostrar uma mensagem de "Status da sua Inscrição salvo com sucesso!" ou algo assim
-
-
-
-//        if (Objects.equals(notification.notification, "SUBSCRIPTION_PURCHASED")){
-//            EventHistory eventHistory_type = new EventHistory();
-//            String type = "Assinatura Comprada";
-//            eventHistory_type.setType(type);
-//            eventHistoryRepository.save(eventHistory_type);
-//        }
-
-    //}
-
-    // Fluxo Subscription Purchased
-    // Adicionando procura/adição do usuário no banco
-    //User userModel = new User();
-    // Tentativa de colocar o findbyId em um método mas tá dando erro, não sei porque
-//                public Optional<User> searchForId (int id){
-//                    userRepository.findById(id);
-//                    return ResponseEntity.ok(HttpStatus.OK);
-//                }
-
-    // se id encontrado
-    //  print(usuário encontrado)
-    //
-    //userRepository.findById(id);
-
-    // adicionar nesse mesmo método, um outro que irá irá consultar a conta dele pelo id
-    // se ele já tiver conta ou adicionar uma nova conta com novo id (que é como se fosse
-    // o nome do usuário + o nome completo se não encontrar o id inicial.
-
-    // outro método setando o tipo e o status aqui de acordo com qual notificação for
 }
