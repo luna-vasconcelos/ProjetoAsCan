@@ -1,17 +1,15 @@
 package com.ascan.ascanflixapi.connections;
 
-import com.ascan.ascanflixapi.constants.RabbitMQconstants;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
-@Component // notação que fala para o spring que essa classe será gerenciada pelo próprio spring
+@Component
 public class RabbitMQconnection {
-    private static final String NOME_EXCHANGE = "amq.direct";
 
     private AmqpAdmin amqpAdmin;
 
@@ -19,32 +17,45 @@ public class RabbitMQconnection {
         this.amqpAdmin = amqpAdmin;
     }
 
-    private Queue fila(String nomeFila){
-        return new Queue(nomeFila, true, false, false);
+    public static final String EXCHANGE_NAME = "amq.direct";
+    public static final String QUEUE_GENERIC_NAME = "appGenericQueue";
+    public static final String QUEUE_SPECIFIC_NAME = "appSpecificQueue";
+    public static final String ROUTING_KEY = "messages.key";
+
+    @Bean
+    public DirectExchange appExchange() {
+        return new DirectExchange(EXCHANGE_NAME);
     }
 
-    private DirectExchange trocaDireta() {
-        return new DirectExchange(NOME_EXCHANGE);
+    @Bean
+    public Queue appQueueGeneric() {
+        return new Queue(QUEUE_GENERIC_NAME);
     }
 
-    private Binding relacionamento(Queue fila, DirectExchange troca){
-        return new Binding(fila.getName(), Binding.DestinationType.QUEUE, troca.getName(), fila.getName(), null);
+    @Bean
+    public Queue appQueueSpecific() {
+        return new Queue(QUEUE_SPECIFIC_NAME);
     }
 
-    //está função é executada assim que nossa classe é instanciada pelo Spring, devido a anotação @Component
-    @PostConstruct
-    private void adiciona(){
-        Queue filaEstoque = this.fila(RabbitMQconstants.queue_notification);
+    @Bean
+    public Binding declareBindingGeneric() {
+        return BindingBuilder.bind(appQueueGeneric()).to(appExchange()).with(ROUTING_KEY);
+    }
 
-        DirectExchange troca = this.trocaDireta();
+    @Bean
+    public Binding declareBindingSpecific() {
+        return BindingBuilder.bind(appQueueSpecific()).to(appExchange()).with(ROUTING_KEY);
+    }
 
-        Binding ligacaoEstoque = this.relacionamento(filaEstoque, troca);
+    @Bean
+    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+        return rabbitTemplate;
+    }
 
-        //Criando as filas no RabbitMQ
-        this.amqpAdmin.declareQueue(filaEstoque);
-        //Instanciando a exchange
-        this.amqpAdmin.declareExchange(troca);
-
-        this.amqpAdmin.declareBinding(ligacaoEstoque);
+    @Bean
+    public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

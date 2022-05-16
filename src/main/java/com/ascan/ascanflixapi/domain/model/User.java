@@ -1,8 +1,6 @@
-package com.ascan.ascanflixapi.model;
+package com.ascan.ascanflixapi.domain.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;

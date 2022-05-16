@@ -1,6 +1,6 @@
-package com.ascan.ascanflixapi.controller;
+package com.ascan.ascanflixapi.application.controller;
 
-import com.ascan.ascanflixapi.model.User;
+import com.ascan.ascanflixapi.domain.model.User;
 import com.ascan.ascanflixapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

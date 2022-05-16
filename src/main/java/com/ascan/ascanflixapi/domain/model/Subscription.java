@@ -1,4 +1,4 @@
-package com.ascan.ascanflixapi.model;
+package com.ascan.ascanflixapi.domain.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
