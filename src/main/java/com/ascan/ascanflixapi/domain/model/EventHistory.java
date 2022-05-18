@@ -1,23 +1,27 @@
 package com.ascan.ascanflixapi.domain.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 public class EventHistory implements Serializable {
 
+    private static final Integer serialVersionUID = 1;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String type; // trocar por enum como
+    private String type; // trocar por enum
 
-    @OneToOne
-    @JoinColumn(name = "subscription_id", referencedColumnName = "id")
-    private Status subscription;
+    //@OneToOne
+    private Integer subscription_id;
 
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    private Instant created_at;
 
     public Integer getId() {
         return id;
@@ -35,19 +39,19 @@ public class EventHistory implements Serializable {
         this.type = type;
     }
 
-    public Status getSubscription() {
-        return subscription;
+    public Integer getSubscription_id() {
+        return subscription_id;
     }
 
-    public void setSubscription(Status subscription) {
-        this.subscription = subscription;
+    public void setSubscription_id(Integer subscription_id) {
+        this.subscription_id = subscription_id;
     }
 
-    public LocalDateTime getCreated_at() {
+    public Instant getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
+    public void setCreated_at(Instant created_at) {
         this.created_at = created_at;
     }
 }

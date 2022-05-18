@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Optional;
 
 @Entity
 public class Subscription implements Serializable {
@@ -23,10 +22,9 @@ public class Subscription implements Serializable {
 
     @OneToOne
     private User user;
-
-    @OneToOne
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Status status;
+    //TODO: Ver qual o problema está dando nessa notação de OneToOne
+    //@OneToOne
+    private Integer status_id;
 
     @CreationTimestamp
     private Instant created_at;
@@ -46,12 +44,12 @@ public class Subscription implements Serializable {
         return user;
     }
 
-    public Status getStatus() {
-        return status;
+    public Integer getStatus_id() {
+        return status_id;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus_id(Integer status_id) {
+        this.status_id = status_id;
     }
 
     public Instant getCreated_at() {

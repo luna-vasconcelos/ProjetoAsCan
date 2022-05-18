@@ -18,7 +18,6 @@ public class RabbitMQconnection {
     }
 
     public static final String EXCHANGE_NAME = "amq.direct";
-    public static final String QUEUE_GENERIC_NAME = "appGenericQueue";
     public static final String QUEUE_SPECIFIC_NAME = "appSpecificQueue";
     public static final String ROUTING_KEY = "messages.key";
 
@@ -28,18 +27,8 @@ public class RabbitMQconnection {
     }
 
     @Bean
-    public Queue appQueueGeneric() {
-        return new Queue(QUEUE_GENERIC_NAME);
-    }
-
-    @Bean
     public Queue appQueueSpecific() {
         return new Queue(QUEUE_SPECIFIC_NAME);
-    }
-
-    @Bean
-    public Binding declareBindingGeneric() {
-        return BindingBuilder.bind(appQueueGeneric()).to(appExchange()).with(ROUTING_KEY);
     }
 
     @Bean
