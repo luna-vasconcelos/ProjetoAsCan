@@ -30,7 +30,7 @@ public class Subscription implements Serializable {
     private Instant created_at;
 
     @UpdateTimestamp
-    private Date updated_at;
+    private Instant updated_at;
 
     public Integer getId() {
         return id;
@@ -64,11 +64,11 @@ public class Subscription implements Serializable {
         this.user = user;
     }
 
-    public Date getUpdated_at() {
+    public Instant getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(Instant updated_at) {
         this.updated_at = updated_at;
     }
 }
