@@ -17,8 +17,8 @@ public class EventHistory implements Serializable {
 
     private String type; // trocar por enum
 
-    //@OneToOne
-    private Integer subscription_id;
+    @OneToOne
+    private Subscription subscription_id;
 
     @CreationTimestamp
     private Instant created_at;
@@ -39,11 +39,11 @@ public class EventHistory implements Serializable {
         this.type = type;
     }
 
-    public Integer getSubscription_id() {
+    public Subscription getSubscription_id() {
         return subscription_id;
     }
 
-    public void setSubscription_id(Integer subscription_id) {
+    public void setSubscription_id(Subscription subscription_id) {
         this.subscription_id = subscription_id;
     }
 

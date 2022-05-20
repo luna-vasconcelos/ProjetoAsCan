@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -65,19 +66,76 @@ public class NotificationConsumer {
             // Operações na Tabela de EventHistoyry
             String typeSP = "SUBSCRIPTION_PURCHASED";
             eventHistory.setType(typeSP);
-            eventHistory.setSubscription_id(subscription.getId());
+            eventHistory.setSubscription_id(validateSubscription(subscription.getId()));
             eventHistoryRepository.save(eventHistory);
 
-            System.out.print("Subscription Purchased successfully!");
+            System.out.println("Subscription Purchased successfully!");
+        }
+
+        if (Objects.equals(notification.notification, "SUBSCRIPTION_CANCELED")){
+            // Operações na Tabela de Subscription
+            Optional<Subscription> updateSubscription = subscriptionRepository.
+                    findByUser(validateUser(notification.user_id));
+            subscriptionRepository.save(updateSubscription.get());
+
+            // Operações na Tabela de Status
+            String status_name = "cancelada";
+            Status statusUpdate = validateStatus(updateSubscription.get().getStatus_id());
+            statusUpdate.setStatus_name(status_name);
+            statusRepository.save(statusUpdate);
+
+            // Operações na Tabela de EventHistory
+            String typeSP = "SUBSCRIPTION_CANCELED";
+            eventHistory.setType(typeSP);
+            eventHistory.setSubscription_id(validateSubscription(subscription.getId()));
+            eventHistoryRepository.save(eventHistory);
+
+            System.out.println("Subscription Canceled successfully!");
+        }
+
+        if (Objects.equals(notification.notification, "SUBSCRIPTION_RESTARTED")){
+            // Operações na Tabela de Subscription
+            Optional<Subscription> updateSubscription = subscriptionRepository.
+                    findByUser(validateUser(notification.user_id));
+            subscriptionRepository.save(updateSubscription.get());
+
+            // Operações na Tabela de Status
+            String status_name = "ativa";
+            Status statusUpdate = validateStatus(updateSubscription.get().getStatus_id());
+            statusUpdate.setStatus_name(status_name);
+            statusRepository.save(statusUpdate);
+
+            // Operações na Tabela de EventHistoyry
+            String typeSP = "SUBSCRIPTION_RESTARTED";
+            eventHistory.setType(typeSP);
+            eventHistory.setSubscription_id(validateSubscription(subscription.getId()));
+            eventHistoryRepository.save(eventHistory);
+
+            System.out.println("Subscription Restarted successfully!");
         }
     }
 
-        // Aí com o EventHistory salvo, fazer:
-        //   - findbyId a Subscription_id pelo SubscriptionRepository
-        //   - Procurar o status pelo status_id dessa Subscription
-        //   - Identificar qual tipo de alteração é pelo type do EventHistpry que já tá salvo
-        //   - Dá um updated no campo de update
-        //   - Alterar ou Status para o novo status com base em qual type é
-        //   - Salvar essa alteração
-        //   - Mostrar uma mensagem de "Status da sua Inscrição salvo com sucesso!" ou algo assim
+    private User validateUser(Integer user_id) {
+        Optional<User> user = userRepository.findById(user_id);
+        if(user.isEmpty()){
+            throw new EmptyResultDataAccessException(1);
+        }
+        return user.get();
+    }
+
+    private Status validateStatus(Integer status_id) {
+        Optional<Status> status = statusRepository.findById(status_id);
+        if(status.isEmpty()){
+            throw new EmptyResultDataAccessException(1);
+        }
+        return status.get();
+    }
+
+    private Subscription validateSubscription(Integer subscription_id) {
+        Optional<Subscription> subscription = subscriptionRepository.findById(subscription_id);
+        if(subscription.isEmpty()){
+            throw new EmptyResultDataAccessException(1);
+        }
+        return subscription.get();
+    }
 }
